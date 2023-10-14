@@ -1,7 +1,16 @@
-<<<<<<< HEAD
 from django.shortcuts import render, redirect
 import requests, time, overpy, math, threading
-#from health.functions import main as func_main
+from django.shortcuts import render
+import requests
+from .models.models import JsonModel
+import os, json
+from rest_framework import viewsets
+from .models.models import JsonModel
+from .serializers import JsonModelSerializer
+
+class JsonModelViewSet(viewsets.ModelViewSet):
+    queryset = JsonModel.objects.all()
+    serializer_class = JsonModelSerializer
 
 # Словарь с рейтингами объектов
 ratings = {
@@ -74,12 +83,8 @@ def haversine(lat1, lon1, lat2, lon2):
 
 # Функция для обработки района
 def process_district(rel, api):
-    global analysis
     if "name" in rel.tags:
         district_name = rel.tags["name"]
-
-        # Здесь можно добавить искусственную задержку, если количество районов больше 8
-
 
         # Запросы и обработка результатов как раньше
         query_education = f"""
@@ -168,11 +173,11 @@ def process_district(rel, api):
 
         # Выводим информацию о районе и его рейтинге
         analysis = {'district': district_name,
-               'educations' : education_count,
-               'unhealthy' : unhealthy_count,
-               'positive' : positive_count,
-               'rating' : district_rating,
-               }
+                    'educations' : education_count,
+                    'unhealthy' : unhealthy_count,
+                    'positive' : positive_count,
+                    'rating' : district_rating,
+                    }
         analysis.update(tag_counts)
         analysis['ecigarette'] = analysis.pop('e-cigarette')
         list_analysis.append(analysis)
@@ -217,80 +222,59 @@ def get_info(city_name):
 
     for thread in threads:
         thread.join()
-=======
-from django.shortcuts import render
-import requests
-from .models.models import JsonModel
-import os, json
-from rest_framework import viewsets
-from .models.models import JsonModel
-from .serializers import JsonModelSerializer
-
-class JsonModelViewSet(viewsets.ModelViewSet):
-    queryset = JsonModel.objects.all()
-    serializer_class = JsonModelSerializer
->>>>>>> 6a96bbf77f5dd42342ee44d4135a14268a9f4c9c
 
 # Функция для получения всех Российских городов
-def get_russian_cities():
-    # Данные для запроса
-    overpass_query = """
-    [out:json];
-    area[name="Россия"]->.a;
-    (
-      node["place"="city"](area.a);
-      way["place"="city"](area.a);
-      relation["place"="city"](area.a);
-    );
-    out center;
-    """
-    # Url api для запроса
-    overpass_url = "https://overpass-api.de/api/interpreter"
-    # Запрос
-    response = requests.get(overpass_url, params={'data': overpass_query})
-    # Проверка кода ответа & создание массива городов
-    if response.status_code == 200:
-        data = response.json()
-        cities = set()
+# def get_russian_cities():
+#     # Данные для запроса
+#     overpass_query = """
+#     [out:json];
+#     area[name="Россия"]->.a;
+#     (
+#         node["place"="city"](area.a);
+#         way["place"="city"](area.a);
+#         relation["place"="city"](area.a);
+#     );
+#     out center;
+#     """
+#     # Url api для запроса
+#     overpass_url = "https://overpass-api.de/api/interpreter"
+#     # Запрос
+#     response = requests.get(overpass_url, params={'data': overpass_query})
+#     # Проверка кода ответа & создание массива городов
+#     if response.status_code == 200:
+#         data = response.json()
+#         cities = []
 
-        for element in data['elements']:
-            if 'name' in element['tags']:
-                cities.add(element['tags']['name'])
+#         for element in data['elements']:
+#             if 'name' in element['tags'] and element['tags']['name'] not in cities:
+#                 cities.append(element['tags']['name'])
 
-        return list(cities)
+#         return cities
 
-# Функция для загрузки данных из JSON в модель Django
-def load_data_from_json():
-    with open('health/cities.json', 'r', encoding='utf-8') as file:
-        data = json.load(file)
 
-    # Создайте объекты модели Django на основе данных из JSON
+def get_self_api():
+    cities = []
+    response = requests.get('http://127.0.0.1:8000/api/jsonmodels/')
+    data = response.json()
     for item in data:
-        region = item['region']
-        city = item['city']
+        cities.append(item['city'])
 
-        JsonModel.objects.create(region=region, city=city)
+    return cities
 
 # Функция для отображения страницы
 def indexpage(request):
-<<<<<<< HEAD
-    list_analysis = []
+    # Вызов функции для загрузки данных из JSON в модель Django
+    list_analysis.clear()
     if request.method == "POST":
         choose_city = request.POST['city']
         return resultspage(request, choose_city)
-=======
-    # Вызов функции для загрузки данных из JSON в модель Django
-    load_data_from_json()
->>>>>>> 6a96bbf77f5dd42342ee44d4135a14268a9f4c9c
 
-    cities = get_russian_cities()
+    citi = get_self_api()
 
-    return render(request, 'index.html', {'list_cities' : cities})
-<<<<<<< HEAD
+    return render(request, 'index.html', {'list_cities' : citi})
 
 def resultspage(request, city):
     get_info(city)
     anal = list_analysis
     return render(request, 'results.html', {'list_analysis' : anal, 'city' : city})
-=======
->>>>>>> 6a96bbf77f5dd42342ee44d4135a14268a9f4c9c
+
