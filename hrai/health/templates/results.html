@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Healthy Region AI</title>
+    <title>HRAI Results</title>
     {% load static %}
     <link
         rel="stylesheet"
@@ -17,12 +17,70 @@
         rel="stylesheet"
         href="{% static 'css/bootstrap.min.css' %}"
     >
+    <link
+        rel="stylesheet"
+        href="{% static 'css/bootstrap.min.css.map' %}"
+    >
+    <link
+        rel="stylesheet"
+        href="{% static 'css/bootstrap.css.map' %}"
+    >
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js.map' %}"></script>
 </head>
 
 <body>
-
+    <nav class="navbar d-flex flex-row justify-content-evenly align-content-center p-2 px-5">
+        <input
+            type="text"
+            class="search p-1"
+            placeholder="Поиск..."
+        >
+        <a href="/">
+            <img
+                src="static/images/logo.png"
+                class="logo"
+            ></a>
+        <div class="icons-row">
+            <button class="icon-button">
+                <img
+                    src="../static/images/tg.svg"
+                    class="icon me-1"
+                ></button>
+            <button class="icon-button mx-2">
+                <img
+                    src="../static/images/vk.svg"
+                    class="icon"
+                ></button>
+            <button class="icon-button">
+                <img
+                    src="../static/images/ok.svg"
+                    class="icon"
+                ></button>
+        </div>
+    </nav>
+    <div class="results-block mt-5 px-5 mx-5">
+        <div class="row g-0 d-flex justify-content-center px-5 mx-5">
+            <h1 class="mt-0 text-center">Анализ районов в городе <br>{{ city }} </h1>
+            <div class="card-content card mt-4 col-auto ps-md-0 text-start d-flex flex-column justify-content-center">
+                {% for item in list_analysis %}
+                <div class="analysis-block text-start p-4">
+                    <h4>Район:{{ item.district}} </h4>
+                    <p>Количество учебных учреждений: {{ item.educations}}</p>
+                    <p>Количество отрицательных мест: {{ item.unhealthy}}</p>
+                    <p>Количество положительных мест: {{item.positive}}</p>
+                    <p>Рейтинг района: {{ item.rating}}</p>
+                    <h5>Статистика мест, отрицательно влияющих на здоровьесберегающую среду.</h5>
+                    <p>Количество алкогольных магазинов: {{item.alcohol}}</p>
+                    <p>Количество магазинов табачной продукции: {{ item.tobacco}}</p>
+                    <p>Количество магазинов электронных сигарет: {{ item.ecigarette }}</p>
+                    <p>Количество продающий газированные напитки: {{ item.beverages }}</p>
+                    <p>Количество винных магазинов: {{ item.wine }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

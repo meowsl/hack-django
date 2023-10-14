@@ -28,10 +28,11 @@
             class="search p-1"
             placeholder="Поиск..."
         >
-        <img
-            src="static/images/logo.png"
-            class="logo"
-        >
+        <a href="/">
+            <img
+                src="static/images/logo.png"
+                class="logo"
+            ></a>
         <div class="icons-row">
             <button class="icon-button">
                 <img
@@ -50,46 +51,19 @@
                 ></button>
         </div>
     </nav>
-    <!-- <div
-        class="app d-flex justify-content-center align-items-center"
-        id="app"
-    >
-        <form
-            method="post"
-            class="forma d-flex flex-column "
-        >
-            <input
-                class="form-control "
-                type="text"
-                name="example"
-                list="exampleList"
-                placeholder="Выберите город"
-            >
-            <datalist id="exampleList">
-                {% for item in list_cities %}
-                <option selected>{{item}}</option>
-                {% endfor %}
-            </datalist>
-            <input
-                class="mt-2"
-                type="submit"
-                value="Выбрать"
-            >
-        </form>
-    </div> -->
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center mt-5">
         <form
             method="post"
             class="forma d-inline-flex flex-column "
-        >
+        > {% csrf_token %}
             <input
                 class="form-control "
                 type="text"
-                name="example"
-                list="exampleList"
+                name="city"
+                list="citiesList"
                 placeholder="Выберите город"
             >
-            <datalist id="exampleList">
+            <datalist id="citiesList">
                 {% for item in list_cities %}
                 <option selected>{{item}}</option>
                 {% endfor %}

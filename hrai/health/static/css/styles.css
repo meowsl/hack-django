@@ -3,6 +3,7 @@
     padding: 0;
 }
 body{
+    height: 100vh;
     background: rgb(23,145,115);
 background: radial-gradient(circle, rgba(23,145,115,1) 0%, rgba(36,187,150,1) 54%, rgba(23,145,115,1) 98%);
 }
@@ -25,10 +26,15 @@ height: 45px;
 border: none;
 border-radius: 50%;
 }
-.app{
-    height: 100vh;
-    width: 100%;
-}
+
 .rf-map{
     padding: 0;
+}
+.analysis-block{
+    background-color: #93a6b0;
+    border-radius: 5%;
+}
+.card-content{
+    background-color: #93a6b0 !important;
+    border-radius: 10% !important;
 }

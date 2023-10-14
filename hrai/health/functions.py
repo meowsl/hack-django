@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-import requests, time, overpy, math, threading
-#from health.functions import main as func_main
-
+import overpy
+import math
+import threading
+import time
 # Словарь с рейтингами объектов
 ratings = {
     "e-cigarette": -40,
@@ -38,7 +38,7 @@ ratings = {
     "fresh fruit and vegetable stores": 85,
     "farm shops": 85
 }
-list_analysis = []
+
 # Функция для пересчета рейтинга в новый диапазон (1-100)
 def rescale_rating(old_rating):
     old_min = -90
@@ -73,7 +73,6 @@ def haversine(lat1, lon1, lat2, lon2):
 
 # Функция для обработки района
 def process_district(rel, api):
-    global analysis
     if "name" in rel.tags:
         district_name = rel.tags["name"]
 
@@ -172,9 +171,7 @@ def process_district(rel, api):
                'positive' : positive_count,
                'rating' : district_rating,
                }
-        analysis.update(tag_counts)
-        analysis['ecigarette'] = analysis.pop('e-cigarette')
-        list_analysis.append(analysis)
+        return analysis, tag_counts
 
 
 def get_info(city_name):
@@ -216,47 +213,3 @@ def get_info(city_name):
 
     for thread in threads:
         thread.join()
-
-# Функция для получения всех Российских городов
-def get_russian_cities():
-    # Данные для запроса
-    overpass_query = """
-    [out:json];
-    area[name="Россия"]->.a;
-    (
-      node["place"="city"](area.a);
-      way["place"="city"](area.a);
-      relation["place"="city"](area.a);
-    );
-    out center;
-    """
-    # Url api для запроса
-    overpass_url = "https://overpass-api.de/api/interpreter"
-    # Запрос
-    response = requests.get(overpass_url, params={'data': overpass_query})
-    # Проверка кода ответа & создание массива городов
-    if response.status_code == 200:
-        data = response.json()
-        cities = set()
-
-        for element in data['elements']:
-            if 'name' in element['tags']:
-                cities.add(element['tags']['name'])
-
-        return list(cities)
-
-# Функция для отображения страницы
-def indexpage(request):
-    list_analysis = []
-    if request.method == "POST":
-        choose_city = request.POST['city']
-        return resultspage(request, choose_city)
-
-    cities = get_russian_cities()
-
-    return render(request, 'index.html', {'list_cities' : cities})
-
-def resultspage(request, city):
-    get_info(city)
-    anal = list_analysis
-    return render(request, 'results.html', {'list_analysis' : anal, 'city' : city})
