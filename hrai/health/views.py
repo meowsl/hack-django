@@ -1,21 +1,20 @@
 from django.shortcuts import render
 import requests
 
+# Функция для получения всех Российских городов
 def get_russian_cities():
-    # Задайте ваш запрос Overpass. В этом примере мы ищем все объекты с тегом "place" равным "city" в России.
+    # Данные для запроса
     overpass_query = """
     [out:json];
     area[name="Россия"]->.a;
     node["place"="city"](area.a);
     out center;
     """
-
-    # URL Overpass API
+    # Url api для запроса
     overpass_url = "https://overpass-api.de/api/interpreter"
-
-    # Отправьте запрос Overpass
+    # Запрос
     response = requests.get(overpass_url, params={'data': overpass_query})
-
+    # Проверка кода ответа & создание массива городов
     if response.status_code == 200:
         data = response.json()
         cities = set()
@@ -26,6 +25,7 @@ def get_russian_cities():
 
         return list(cities)
 
+# Функция для отображения страницы
 def indexpage(request):
 
     cities = get_russian_cities()
