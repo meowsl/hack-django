@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render, redirect
 import requests, time, overpy, math, threading
 #from health.functions import main as func_main
@@ -216,6 +217,19 @@ def get_info(city_name):
 
     for thread in threads:
         thread.join()
+=======
+from django.shortcuts import render
+import requests
+from .models.models import JsonModel
+import os, json
+from rest_framework import viewsets
+from .models.models import JsonModel
+from .serializers import JsonModelSerializer
+
+class JsonModelViewSet(viewsets.ModelViewSet):
+    queryset = JsonModel.objects.all()
+    serializer_class = JsonModelSerializer
+>>>>>>> 6a96bbf77f5dd42342ee44d4135a14268a9f4c9c
 
 # Функция для получения всех Российских городов
 def get_russian_cities():
@@ -245,18 +259,38 @@ def get_russian_cities():
 
         return list(cities)
 
+# Функция для загрузки данных из JSON в модель Django
+def load_data_from_json():
+    with open('health/cities.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    # Создайте объекты модели Django на основе данных из JSON
+    for item in data:
+        region = item['region']
+        city = item['city']
+
+        JsonModel.objects.create(region=region, city=city)
+
 # Функция для отображения страницы
 def indexpage(request):
+<<<<<<< HEAD
     list_analysis = []
     if request.method == "POST":
         choose_city = request.POST['city']
         return resultspage(request, choose_city)
+=======
+    # Вызов функции для загрузки данных из JSON в модель Django
+    load_data_from_json()
+>>>>>>> 6a96bbf77f5dd42342ee44d4135a14268a9f4c9c
 
     cities = get_russian_cities()
 
     return render(request, 'index.html', {'list_cities' : cities})
+<<<<<<< HEAD
 
 def resultspage(request, city):
     get_info(city)
     anal = list_analysis
     return render(request, 'results.html', {'list_analysis' : anal, 'city' : city})
+=======
+>>>>>>> 6a96bbf77f5dd42342ee44d4135a14268a9f4c9c

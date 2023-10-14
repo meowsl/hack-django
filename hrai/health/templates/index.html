@@ -62,12 +62,17 @@
                 name="city"
                 list="citiesList"
                 placeholder="Выберите город"
+                id="my-input"
             >
             <datalist id="citiesList">
                 {% for item in list_cities %}
                 <option selected>{{item}}</option>
                 {% endfor %}
             </datalist>
+            <h1
+                id="output"
+                class="d-none"
+            ></h1>
             <input
                 class="mt-2"
                 type="submit"
