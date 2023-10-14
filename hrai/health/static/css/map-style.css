@@ -13,7 +13,7 @@
     z-index: 5;
     width: 18px;
     height: 18px;
-    background: rgba(51, 122, 183, 0.9);
+    background: #e79528;
     border-radius: 50%;
     left: 6px;
     top: 18px;
@@ -28,7 +28,7 @@
     font-weight: bold;
     font-family: Tahoma, sans-serif;
     line-height: 1;
-    color: #337AB7;
+    color: #e79528;
 }
 .rf-map .district {
     display: none;
@@ -58,8 +58,12 @@
     fill: #337AB7;
     transition: fill 0.2s;
 }
-.rf-map [data-code]:hover {
-    fill: #0180ef;
+.rf-map [data-title]:hover {
+    fill: #e79528;
+}
+
+.rf-map [data-title].hovered {
+    fill: #e79528;
 }
 .rf-map .district-text {
     display: none;

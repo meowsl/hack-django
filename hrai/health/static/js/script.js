@@ -1,31 +1,18 @@
 $(function () {
     $('[data-code]').mouseenter(function () {
-        $('.district span').html($(this).attr('data-title'));
+        const title = $(this).attr('data-title');
+        $('.district span').html(title);
         $('.district').show();
+        $(this).addClass('hovered');
     });
+
     $('[data-code]').mouseleave(function () {
         if (!$('.rf-map').hasClass("open")) {
             $('.district').hide();
         }
+        $(this).removeClass('hovered'); // Удаляем класс при уходе с элемента
     });
-    $('.rf-map').on('click', '[data-code], .district-links div', function () {
-        let id = $(this).attr('data-code');
-        if ($('#' + id).text() != '') {
-            $('.district').show();
-            $('.district span').html($(this).attr('data-title'));
-            $('[data-code]').addClass('dropfill');
-            $(this).addClass('mainfill');
-            $('.rf-map').addClass('open');
-            $('#' + id).fadeIn();
-        }
-    });
-    $('.close-district').click(function () {
-        $('.rf-map').removeClass('open');
-        $('[data-code]').removeClass('dropfill');
-        $('[data-code]').removeClass('mainfill');
-        $('.district-text').hide();
-        $('.district').hide();
-    });
+
     $('[data-code]').each(function () {
         let id = $(this).attr('data-code');
         let title = $(this).attr('data-title');
@@ -34,3 +21,59 @@ $(function () {
         }
     });
 });
+
+const myInput = document.getElementById('my-input');
+const output = document.getElementById('output');
+let data = [];
+
+// Функция для загрузки данных с сервера
+function loadData() {
+    fetch('/api/jsonmodels/')
+        .then(response => response.json())
+        .then(jsonData => {
+            data = jsonData;
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки данных: ', error);
+        });
+}
+
+myInput.addEventListener('input', function () {
+    const inputValue = myInput.value;
+    if (inputValue) {
+        const regions = [];
+        let regionTitle = ''; // Переменная для хранения data-title
+
+        data.forEach(item => {
+            if (item.city === inputValue && !regions.includes(item.region)) {
+                regions.push(item.region);
+                regionTitle = item.region; // Сохраняем data-title
+            }
+        });
+
+        if (regions.length > 0) {
+
+            // Добавляем класс для изменения стиля
+            $('[data-code]').removeClass('hovered'); // Сначала удаляем класс со всех элементов
+
+            // Отображаем data-title на карте
+            $('.district span').html(regionTitle);
+            $('.district').show();
+
+            regions.forEach(region => {
+                $(`[data-title="${region}"]`).addClass('hovered');
+            });
+        } else {
+            output.textContent = 'Регион не найден';
+            $('.district').hide();
+        }
+    } else {
+        output.textContent = ''; // Очищаем вывод, если поле ввода пустое
+        $('[data-code]').removeClass('hovered'); // Удаляем класс при пустом поле ввода
+        $('.district').hide();
+    }
+});
+
+
+// Вызываем функцию для загрузки данных
+loadData();

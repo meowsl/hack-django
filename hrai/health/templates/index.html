@@ -88,12 +88,17 @@
                 name="example"
                 list="exampleList"
                 placeholder="Выберите город"
+                id="my-input"
             >
             <datalist id="exampleList">
                 {% for item in list_cities %}
                 <option selected>{{item}}</option>
                 {% endfor %}
             </datalist>
+            <h1
+                id="output"
+                class="d-none"
+            ></h1>
             <input
                 class="mt-2"
                 type="submit"

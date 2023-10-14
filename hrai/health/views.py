@@ -1,5 +1,14 @@
 from django.shortcuts import render
 import requests
+from .models.models import JsonModel
+import os, json
+from rest_framework import viewsets
+from .models.models import JsonModel
+from .serializers import JsonModelSerializer
+
+class JsonModelViewSet(viewsets.ModelViewSet):
+    queryset = JsonModel.objects.all()
+    serializer_class = JsonModelSerializer
 
 # Функция для получения всех Российских городов
 def get_russian_cities():
@@ -29,8 +38,22 @@ def get_russian_cities():
 
         return list(cities)
 
+# Функция для загрузки данных из JSON в модель Django
+def load_data_from_json():
+    with open('health/cities.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    # Создайте объекты модели Django на основе данных из JSON
+    for item in data:
+        region = item['region']
+        city = item['city']
+
+        JsonModel.objects.create(region=region, city=city)
+
 # Функция для отображения страницы
 def indexpage(request):
+    # Вызов функции для загрузки данных из JSON в модель Django
+    load_data_from_json()
 
     cities = get_russian_cities()
 
