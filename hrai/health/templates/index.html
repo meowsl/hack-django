@@ -50,13 +50,13 @@
                 ></button>
         </div>
     </nav>
-    <div
+    <!-- <div
         class="app d-flex justify-content-center align-items-center"
         id="app"
     >
         <form
             method="post"
-            class="forma d-flex flex-column"
+            class="forma d-flex flex-column "
         >
             <input
                 class="form-control "
@@ -76,7 +76,29 @@
                 value="Выбрать"
             >
         </form>
-    </div>
+    </div> -->
+    <form
+        method="post"
+        class="forma d-inline-flex flex-column "
+    >
+        <input
+            class="form-control "
+            type="text"
+            name="example"
+            list="exampleList"
+            placeholder="Выберите город"
+        >
+        <datalist id="exampleList">
+            {% for item in list_cities %}
+            <option selected>{{item}}</option>
+            {% endfor %}
+        </datalist>
+        <input
+            class="mt-2"
+            type="submit"
+            value="Выбрать"
+        >
+    </form>
     <div class="rf-map">
         <div class="district"><b></b><span></span></div>
         <div class="close-district">&times;</div>
