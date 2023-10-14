@@ -7,7 +7,11 @@ def get_russian_cities():
     overpass_query = """
     [out:json];
     area[name="Россия"]->.a;
-    node["place"="city"](area.a);
+    (
+      node["place"="city"](area.a);
+      way["place"="city"](area.a);
+      relation["place"="city"](area.a);
+    );
     out center;
     """
     # Url api для запроса
