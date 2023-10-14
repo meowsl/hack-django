@@ -1,14 +1,77 @@
 <!DOCTYPE html>
-{% load static %}
 <html>
 
 <head>
     <meta charset="utf-8" />
     <title>Healthy Region AI</title>
+    {% load static %}
+    <link
+        rel="stylesheet"
+        href=" {% static 'css/styles.css' %}"
+    >
+    <link
+        rel="stylesheet"
+        href="{% static 'css/bootstrap.min.css' %}"
+    >
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js.map' %}"></script>
 </head>
 
 <body>
-
+    <nav class="navbar d-flex flex-row justify-content-evenly align-content-center p-2 px-5">
+        <input
+            type="text"
+            class="search p-1"
+            placeholder="Поиск..."
+        >
+        <img
+            src="static/images/logo.png"
+            class="logo"
+        >
+        <div class="icons-row">
+            <button class="icon-button">
+                <img
+                    src="static/images/tg.svg"
+                    class="icon me-1"
+                ></button>
+            <button class="icon-button mx-2">
+                <img
+                    src="static/images/vk.svg"
+                    class="icon"
+                ></button>
+            <button class="icon-button">
+                <img
+                    src="static/images/ok.svg"
+                    class="icon"
+                ></button>
+        </div>
+    </nav>
+    <div
+        class="app d-inline-flex justify-content-center align-content-center"
+        id="app"
+    >
+        <form method="post">
+            <inputl
+                class="form-control"
+                type="text"
+                name="example"
+                list="exampleList"
+                placeholder="Выберите город"
+            >
+                <datalist id="exampleList">
+                    {% for item in list_cities %}
+                    <option selected>{{item}}</option>
+                    {% endfor %}
+                </datalist>
+                <input
+                    type="submit"
+                    value="Выбрать"
+                >
+        </form>
+    </div>
+    <script>
+        var list_cities = '{{ list_cities|safe }}';
+    </script>
 </body>
 
 </html>
