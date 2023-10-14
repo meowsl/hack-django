@@ -47,26 +47,30 @@
         </div>
     </nav>
     <div
-        class="app d-inline-flex justify-content-center align-content-center"
+        class="app d-flex justify-content-center align-content-center"
         id="app"
     >
-        <form method="post">
-            <inputl
-                class="form-control"
+        <form
+            method="post"
+            class="d-flex flex-column align-content-center"
+        >
+            <input
+                class="form-control "
                 type="text"
                 name="example"
                 list="exampleList"
                 placeholder="Выберите город"
             >
-                <datalist id="exampleList">
-                    {% for item in list_cities %}
-                    <option selected>{{item}}</option>
-                    {% endfor %}
-                </datalist>
-                <input
-                    type="submit"
-                    value="Выбрать"
-                >
+            <datalist id="exampleList">
+                {% for item in list_cities %}
+                <option selected>{{item}}</option>
+                {% endfor %}
+            </datalist>
+            <input
+                class="mt-2"
+                type="submit"
+                value="Выбрать"
+            >
         </form>
     </div>
     <script>
