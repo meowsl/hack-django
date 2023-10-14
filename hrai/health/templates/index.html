@@ -77,28 +77,30 @@
             >
         </form>
     </div> -->
-    <form
-        method="post"
-        class="forma d-inline-flex flex-column "
-    >
-        <input
-            class="form-control "
-            type="text"
-            name="example"
-            list="exampleList"
-            placeholder="Выберите город"
+    <div class="d-flex align-items-center justify-content-center">
+        <form
+            method="post"
+            class="forma d-inline-flex flex-column "
         >
-        <datalist id="exampleList">
-            {% for item in list_cities %}
-            <option selected>{{item}}</option>
-            {% endfor %}
-        </datalist>
-        <input
-            class="mt-2"
-            type="submit"
-            value="Выбрать"
-        >
-    </form>
+            <input
+                class="form-control "
+                type="text"
+                name="example"
+                list="exampleList"
+                placeholder="Выберите город"
+            >
+            <datalist id="exampleList">
+                {% for item in list_cities %}
+                <option selected>{{item}}</option>
+                {% endfor %}
+            </datalist>
+            <input
+                class="mt-2"
+                type="submit"
+                value="Выбрать"
+            >
+        </form>
+    </div>
     <div class="rf-map">
         <div class="district"><b></b><span></span></div>
         <div class="close-district">&times;</div>
