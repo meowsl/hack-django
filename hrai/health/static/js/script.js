@@ -77,3 +77,31 @@ myInput.addEventListener('input', function () {
 
 // Вызываем функцию для загрузки данных
 loadData();
+
+const loader = document.getElementById("loader");
+const button = document.getElementById("btn");
+
+button.addEventListener("click", () => {
+    // Показать индикатор загрузки перед выполнением запроса
+    loader.style.display = "block";
+
+    // Выполните ваш запрос или операцию
+    yourAsyncOperation()
+        .then(() => {
+            // Завершение успешное, скрыть индикатор загрузки
+            loader.style.display = "none";
+        })
+        .catch(() => {
+            // Завершение с ошибкой, также скрыть индикатор загрузки
+            loader.style.display = "none";
+        });
+});
+
+function yourAsyncOperation() {
+    // Ваш запрос или операция, возвращающие Promise
+    return new Promise((resolve, reject) => {
+        // Ваш код запроса или операции
+        // По завершении вызывайте resolve() для успешного выполнения
+        // или reject() в случае ошибки
+    });
+}
