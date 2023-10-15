@@ -36,11 +36,13 @@
 
 <body>
     <nav class="navbar d-flex flex-row justify-content-evenly align-content-center p-2 px-5">
-        <input
-            type="text"
-            class="search p-1"
-            placeholder="Поиск..."
-        >
+        <div class="logo-text text-center">
+            <h2 class="mb-0 text-uppercase">Healthy</h2>
+            <div class="d-flex justify-content-evenly">
+                <p class="text-uppercase">R e g i o n</p>
+                <p>A I</p>
+            </div>
+        </div>
         <a href="/">
             <img
                 src="static/images/logo.png"
@@ -70,17 +72,18 @@
             <div class="card-content card mt-4 col-auto ps-md-0 text-start d-flex flex-column justify-content-center">
                 {% for item in list_analysis %}
                 <div class="analysis-block text-start p-4">
-                    <h4>Район:{{ item.district}} </h4>
+                    <h4 class="mb-3">Район: {{ item.district}} </h4>
                     <p>Количество учебных учреждений: {{ item.educations}}</p>
                     <p>Количество отрицательных мест: {{ item.unhealthy}}</p>
                     <p>Количество положительных мест: {{item.positive}}</p>
-                    <p>Рейтинг района: {{ item.rating}}</p>
-                    <h5>Статистика мест, отрицательно влияющих на здоровьесберегающую среду.</h5>
+                    <p class="mb-5">Рейтинг района: {{ item.rating}}</p>
+                    <h5 class="mb-3">Статистика мест, отрицательно влияющих на здоровьесберегающую среду.</h5>
                     <p>Количество алкогольных магазинов: {{item.alcohol}}</p>
                     <p>Количество магазинов табачной продукции: {{ item.tobacco}}</p>
                     <p>Количество магазинов электронных сигарет: {{ item.ecigarette }}</p>
                     <p>Количество продающий газированные напитки: {{ item.beverages }}</p>
                     <p>Количество винных магазинов: {{ item.wine }}</p>
+                    <p class="underline mt-5"></p>
                 </div>
                 {% endfor %}
             </div>
