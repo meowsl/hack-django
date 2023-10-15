@@ -55,6 +55,6 @@ python manage.py runserver
 РАЗРАБОТЧИКИ
 <h4>Ткаченко Вадим - Backend Developer, https://t.me/data_ptr</h4>
 <h4>Альтигов Салех - Fullstack Developer, https://t.me/absoluteIynothing</h4>
-<h4> Укажите тут Никиту</h4>
+<h4>Кондарюк Никита - </h4>
 <h4>Швецов Игорь - Data Analyst, https://t.me/bu1101</h4>
 <h4>Бабушкин Владислав - Fullstack Developer, https://t.me/slay_meow</h4>
