@@ -21,10 +21,16 @@ background: radial-gradient(circle, rgba(23,145,115,1) 0%, rgba(36,187,150,1) 54
 }
 .icon-button{
     background-color: #93a6b0;
-width: 45px;
-height: 45px;
-border: none;
-border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+}
+.icon-button:hover{
+    background-color:#454e53;
+}
+a{
+    text-decoration: none;
 }
 
 .rf-map{
