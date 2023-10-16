@@ -8,13 +8,13 @@ html{
 body{
     height: 100vh;
     background: rgb(23,145,115);
-background: radial-gradient(circle, rgba(23,145,115,1) 0%, rgba(36,187,150,1) 54%, rgba(23,145,115,1) 98%);
+    background: radial-gradient(circle, rgba(23,145,115,1) 0%, rgba(36,187,150,1) 54%, rgba(23,145,115,1) 98%);
 }
 .logo{
     max-width: 100px;
 }
 .search{
-    background-color:#93a6b0 !important;
+    background-color:#ffffff !important;
     border: 1px solid black;
     height: 35px;
     width: 150px;
@@ -40,11 +40,11 @@ a{
     padding: 0;
 }
 .analysis-block{
-    background-color: #93a6b0;
+    background-color: #FFF;
     border-radius: 5%;
 }
 .card-content{
-    background-color: #93a6b0 !important;
+    background-color: #FFF !important;
     border-radius: 10% !important;
 }
 
@@ -61,4 +61,20 @@ a{
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  .main-btn{
+    height: 40px;
+  }
+
+  .form-control,.search{
+    height: 40px;
+  }
+
+  .underline{
+    border: 1px solid #000;
+  }
+
+  .logo-text{
+    color:#055f23;
   }
